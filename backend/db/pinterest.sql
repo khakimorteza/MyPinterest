@@ -1,0 +1,23 @@
+DROP DATABASE IF EXISTS pinterest;
+CREATE DATABASE pinterest;
+
+\c pinterest;
+
+CREATE TABLE users (
+  id SERIAL PRIMARY KEY,
+  username VARCHAR NOT NULL,
+  email VARCHAR NOT NULL
+);
+
+CREATE TABLE boards (
+ id SERIAL PRIMARY KEY,
+ title VARCHAR NOT NULL,
+ user_id INT REFERENCES users(id) ON DELETE CASCADE
+);
+
+CREATE TABLE pins (
+ id SERIAL PRIMARY KEY,
+ user_id INT REFERENCES users(id) ON DELETE CASCADE,
+ board_id INT REFERENCES boards(id),
+ url VARCHAR NOT NULL
+);

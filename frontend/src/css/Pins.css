@@ -1,0 +1,32 @@
+.display-pins {
+  position: relative;
+}
+
+.display-pins select {
+  display: none;
+  position: absolute;
+  margin: 10px;
+  width: calc(95% - 10px);
+  z-index: 2;
+}
+
+.display-pins:hover select {
+  display: block;
+}
+.images-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  margin-left: 80px;
+  margin-right: 80px;
+  margin-top: 20px;
+}
+
+.image {
+  display: flex;
+  justify-content: space-around;
+  width: 235px;
+  height: auto;
+  margin-bottom: 15px;
+  border-radius: 10px;
+}

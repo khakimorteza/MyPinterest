@@ -1,0 +1,41 @@
+.image-page {
+  background: whitesmoke;
+  min-height: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.link-home {
+  display: flex;
+  justify-content: flex-start;
+  margin-left: 15px;
+}
+
+.image-container {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  background-color: white;
+  width: 400px;
+  height: 400px;
+  padding: 25px;
+  margin-top: 35px;
+  border-radius: 10px;
+}
+
+.image-form {
+  display: flex;
+  justify-content: flex-end;
+  align-items: start;
+}
+
+.image-form input[type="button"] {
+  background-color: red;
+  color: white;
+}
+
+.one-img {
+  width: 90%;
+  border-radius: 5px;
+  align-self: center;
+}
