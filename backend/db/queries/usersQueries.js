@@ -1,4 +1,5 @@
 const { db } = require("./connection.js");
+const _ = require("lodash");
 
 const getAllusers = (req, res, next) => {
   db.any("SELECT * FROM users")
@@ -59,13 +60,40 @@ const getPinsForAuser = (req, res, next) => {
     });
 };
 
-const getBoardsForAuser = (req, res, next) => {
+const getBoardsAndPinsForAuser = (req, res, next) => {
   let user_id = parseInt(req.params.id);
   db.any(
-    "SELECT boards.* FROM users JOIN boards ON boards.user_id = users.id WHERE users.id =$1",
+    "SELECT users.username, boards.title, pins.url, pins.id AS pin_id, pins.board_id FROM users JOIN boards ON boards.user_id = users.id JOIN pins ON boards.id = pins.board_id  WHERE users.id =$1",
     [user_id]
   )
-    .then(boards => {
+    .then(data => {
+      // const user = _(data)
+      //   .uniqBy("username")
+      //   .map(d => _.pick(d, ["username"]))
+      //   .value();
+
+      const boards = _(data)
+        .uniqBy("board_id")
+        .map(e => _.pick(e, ["board_id", "title"]))
+        .value();
+
+      // const unique = _.uniqBy(data, 'board_id')
+      // const boards = _.map(unique, e => _.pick(e, ["board_id", "title"]))
+      // const boards = unique.map(e, e => _.pick(e, ["board_id", "title"]))
+
+      // [{board_id:1 , title: "aaa"}, {board_id:2 , title: "bbb"}]
+
+      // user.boards = boards;
+      data.forEach(item => {
+        const pin = _.pick(item, ["pin_id", "url"]);
+        // {pin_id: 1, url: "aaaaa" }
+        const board = boards.find(b => b.board_id === item.board_id);
+        if (!board.pins) {
+          board.pins = [];
+        }
+        board.pins.push(pin);
+      });
+
       res.status(200).json({
         status: "success",
         boards: boards,
@@ -117,7 +145,7 @@ module.exports = {
   createUser,
   getSingleUser,
   getPinsForAuser,
-  getBoardsForAuser,
+  getBoardsAndPinsForAuser,
   updateAUser,
   deleteAUser
 };

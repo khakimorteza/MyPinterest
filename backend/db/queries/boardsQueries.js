@@ -1,4 +1,5 @@
 const { db } = require("./connection.js");
+const _ = require("lodash");
 
 const getAllBoards = (req, res, next) => {
   db.any("SELECT * FROM boards")
@@ -43,17 +44,32 @@ const createABoard = (req, res, next) => {
     .catch(err => next(err));
 };
 
-const getPinsForABoard = (req, res, next) => {
+const getABoardWithPins = (req, res, next) => {
   let board_id = parseInt(req.params.id);
   db.any(
-    "SELECT pins.* FROM boards JOIN pins ON pins.board_id = boards.id WHERE boards.id =$1",
+    "SELECT  boards.title, pins.url, pins.id AS pin_id, pins.board_id FROM boards JOIN pins  ON boards.id = pins.board_id  WHERE boards.id =$1",
     [board_id]
   )
-    .then(pins => {
+
+    .then(data => {
+      const boards = _(data)
+        .uniqBy("board_id")
+        .map(e => _.pick(e, ["board_id", "title"]))
+        .value();
+
+      data.forEach(item => {
+        const pin = _.pick(item, ["pin_id", "url"]);
+        const board = boards.find(d => d.board_id === item.board_id);
+        if (!board.pins) {
+          board.pins = [];
+        }
+        board.pins.push(pin);
+      });
+
       res.status(200).json({
         status: "success",
-        pins: pins,
-        message: "Received all Pins For a Board"
+        board: boards[0],
+        message: "Received all Pins in a Board"
       });
     })
     .catch(err => {
@@ -100,7 +116,7 @@ module.exports = {
   getAllBoards,
   getSingleBoard,
   createABoard,
-  getPinsForABoard,
+  getABoardWithPins,
   deleteABoard,
   editeABoard
 };

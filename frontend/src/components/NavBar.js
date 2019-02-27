@@ -13,7 +13,7 @@ export const NavBar = () => {
       </NavLink>
       <input className="input" type="text" placeholder=" 🔍 Search ..." />
       <NavLink to={"/home"}>Home</NavLink>
-      <NavLink to={"/user"}>Username</NavLink>
+      <NavLink to={"/user/11/boards"}>Ms. Jocelyn Hammes</NavLink>
       <NavLink to={"/user"}>Logout</NavLink>
     </nav>
   );

@@ -14,11 +14,11 @@
   display: block;
 }
 .images-container {
+  width: 90%;
+  margin: auto;
   display: flex;
   flex-wrap: wrap;
   justify-content: space-around;
-  margin-left: 80px;
-  margin-right: 80px;
   margin-top: 20px;
 }
 

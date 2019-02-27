@@ -5,7 +5,7 @@ const {
   getAllBoards,
   getSingleBoard,
   createABoard,
-  getPinsForABoard,
+  getABoardWithPins,
   deleteABoard,
   editeABoard
 } = require("../db/queries/boardsQueries.js");
@@ -13,7 +13,7 @@ const {
 router.get("/", getAllBoards);
 router.get("/:id", getSingleBoard);
 router.post("/", createABoard);
-router.get("/:id/pins", getPinsForABoard);
+router.get("/:id/pins", getABoardWithPins);
 router.delete("/:id", deleteABoard);
 router.patch("/:id", editeABoard);
 

@@ -3,14 +3,19 @@ import { Route, Switch } from "react-router-dom";
 import { NavBar } from "./components/NavBar";
 import {
   getAllUsers,
+  getSingleUser,
   getAllBoards,
   getAllPins,
   getSinglePin,
-  getBoardsForAuser
+  getBoardsAndPinsForAuser,
+  getPinsForAuser,
+  getABoardWithPins
 } from "./util/util.js";
 import { Pins } from "./components/pins/Pins.js";
 import OnePin from "./components/onePin/OnePin.js";
-import UserProfile from "./components/user/UserProfile.js";
+import UserBoards from "./components/user/UserBoards.js";
+import UserPins from "./components/user/UserPins.js";
+import BoardPins from "./components/board/Board.js";
 import axios from "axios";
 import "./css/App.css";
 
@@ -19,10 +24,14 @@ class App extends Component {
     super(props);
     this.state = {
       users: [],
+      user: null,
       boards: [],
       pins: [],
       pin: null,
-      userBoards: []
+      userBoards: [],
+      userPins: [],
+      boardPins: [],
+      board: null
     };
   }
   componentDidMount() {
@@ -36,15 +45,34 @@ class App extends Component {
     getSinglePin(id).then(res => this.setState({ pin: res.data.image }));
   };
 
-  boardsForAuser = id => {
-    getBoardsForAuser(id).then(res =>
+  getSingleUser = id => {
+    getSingleUser(id).then(res => {
+      console.log("!!!!!", res.data);
+      this.setState({ user: res.data.user });
+    });
+  };
+
+  boardsAndPinsForAuser = id => {
+    getBoardsAndPinsForAuser(id).then(res =>
       this.setState({ userBoards: res.data.boards })
     );
   };
 
+  loadPinsForAuser = id => {
+    getPinsForAuser(id).then(res => {
+      this.setState({ userPins: res.data.pins });
+    });
+  };
+
+  loadPinsForAboardWithBoard = id => {
+    getABoardWithPins(id).then(res => {
+      this.setState({ boardPins: res.data.board });
+    });
+  };
+
   render() {
     console.log(this.state);
-    const { pins, pin, userBoards } = this.state;
+    const { pins, pin, userBoards, user, userPins, boardPins } = this.state;
     return (
       <div className="App">
         <NavBar />
@@ -54,6 +82,37 @@ class App extends Component {
             path="/home"
             render={props => <Pins {...props} pins={pins} />}
           />
+
+          <Route
+            path="/user/:id/boards"
+            render={props => {
+              return (
+                <UserBoards
+                  {...props}
+                  userBoards={userBoards}
+                  user={user}
+                  getSingleUser={this.getSingleUser}
+                  boardsAndPinsForAuser={this.boardsAndPinsForAuser}
+                />
+              );
+            }}
+          />
+
+          <Route
+            path="/user/:id/pins"
+            render={props => {
+              return (
+                <UserPins
+                  {...props}
+                  userPins={userPins}
+                  user={user}
+                  getSingleUser={this.getSingleUser}
+                  loadPinsForAuser={this.loadPinsForAuser}
+                />
+              );
+            }}
+          />
+
           <Route
             path="/pin/:id"
             render={props => {
@@ -63,13 +122,13 @@ class App extends Component {
             }}
           />
           <Route
-            path="/user"
+            path="/board/:id"
             render={props => {
               return (
-                <UserProfile
+                <BoardPins
                   {...props}
-                  userBoards={userBoards}
-                  boardsForAuser={this.boardsForAuser}
+                  boardPins={boardPins}
+                  loadPinsForAboardWithBoard={this.loadPinsForAboardWithBoard}
                 />
               );
             }}
