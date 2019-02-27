@@ -1,5 +1,6 @@
 const { db } = require("./connection.js");
 const _ = require("lodash");
+const authHelpers = require("../../auth/helpers");
 
 const getAllusers = (req, res, next) => {
   db.any("SELECT * FROM users")
@@ -14,9 +15,10 @@ const getAllusers = (req, res, next) => {
 };
 
 const createUser = (req, res, next) => {
+  const hash = authHelpers.createHash(req.body.password);
   db.none(
-    "INSERT INTO users(username, email) VALUES(${username}, ${email})",
-    req.body
+    "INSERT INTO users(username, email, password_digest) VALUES(${username}, ${email}, ${password})",
+    { username: req.body.username, email: req.body.email, password: hash }
   )
     .then(() => {
       res.status(200).json({
@@ -25,6 +27,23 @@ const createUser = (req, res, next) => {
       });
     })
     .catch(err => next(err));
+};
+
+const logoutUser = (req, res, next) => {
+  req.logout();
+  res.status(200).send("log out success");
+};
+
+const loginUser = (req, res) => {
+  res.json(req.user);
+};
+
+const isLoggedIn = (req, res) => {
+  if (req.user) {
+    res.json({ username: req.user });
+  } else {
+    res.json({ username: null });
+  }
 };
 
 const getSingleUser = (req, res, next) => {
@@ -143,6 +162,9 @@ const deleteAUser = (req, res, next) => {
 module.exports = {
   getAllusers,
   createUser,
+  logoutUser,
+  loginUser,
+  isLoggedIn,
   getSingleUser,
   getPinsForAuser,
   getBoardsAndPinsForAuser,

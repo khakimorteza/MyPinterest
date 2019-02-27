@@ -6,7 +6,8 @@ CREATE DATABASE pinterest;
 CREATE TABLE users (
   id SERIAL PRIMARY KEY,
   username VARCHAR NOT NULL,
-  email VARCHAR NOT NULL
+  email VARCHAR NOT NULL,
+  password_digest VARCHAR NOT NULL
 );
 
 CREATE TABLE boards (
