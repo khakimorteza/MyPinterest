@@ -21,6 +21,7 @@ const createUser = (req, res, next) => {
     { username: req.body.username, email: req.body.email, password: hash }
   )
     .then(() => {
+      console.log("USER CREATED !!!!!!");
       res.status(200).json({
         status: "success",
         message: "NEW USER ADDED!"
@@ -40,7 +41,16 @@ const loginUser = (req, res) => {
 
 const isLoggedIn = (req, res) => {
   if (req.user) {
-    res.json({ username: req.user });
+    db.one("SELECT id, username, email FROM users WHERE username=$1", [
+      req.user
+    ]).then(user => {
+      res.status(200).json({
+        status: "success",
+        user: user,
+        message: "Received ONE USER!"
+      });
+    });
+    // res.status(200).json({});
   } else {
     res.json({ username: null });
   }

@@ -13,7 +13,7 @@ nav {
   border-bottom: 1px solid whitesmoke;
 }
 
-input[type="text"] {
+.input {
   background-color: whitesmoke;
   width: 900px;
   height: 38px;

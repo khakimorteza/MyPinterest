@@ -15,16 +15,17 @@ const {
   logoutUser
 } = require("../db/queries/usersQueries.js");
 /* GET users listing. */
+
+router.post("/", createUser); //sighn in
+router.post("/login", passport.authenticate("local", {}), loginUser);
+router.get("/isLoggedIn", isLoggedIn);
+router.post("/logout", loginRequired, logoutUser);
+
 router.get("/", getAllusers);
 router.get("/:id", getSingleUser);
-router.post("/", createUser);
 router.get("/:id/pins", getPinsForAuser);
 router.get("/:id/boards", getBoardsAndPinsForAuser);
 router.patch("/:id", updateAUser);
 router.delete("/:id", deleteAUser);
-
-router.post("/login", passport.authenticate("local", {}), loginUser);
-router.get("/isLoggedIn", isLoggedIn);
-router.post("/logout", loginRequired, logoutUser);
 
 module.exports = router;

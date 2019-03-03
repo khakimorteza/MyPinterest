@@ -9,14 +9,18 @@ import {
   getSinglePin,
   getBoardsAndPinsForAuser,
   getPinsForAuser,
-  getABoardWithPins
+  getABoardWithPins,
+  loginAuser,
+  signUpAuser,
+  logoutUser,
+  isUserLoggedIn
 } from "./util/util.js";
 import { Pins } from "./components/pins/Pins.js";
 import OnePin from "./components/onePin/OnePin.js";
 import UserBoards from "./components/user/UserBoards.js";
 import UserPins from "./components/user/UserPins.js";
 import BoardPins from "./components/board/Board.js";
-import axios from "axios";
+import Login from "./components/log/Login.js";
 import "./css/App.css";
 
 class App extends Component {
@@ -31,13 +35,21 @@ class App extends Component {
       userBoards: [],
       userPins: [],
       boardPins: [],
-      board: null
+      board: null,
+      showModal: "login",
+      currentUser: null
     };
   }
   componentDidMount() {
-    getAllUsers().then(res => this.setState({ users: res.data.users }));
+    // getAllUsers().then(res => this.setState({ users: res.data.users }));
     getAllBoards().then(res => this.setState({ boards: res.data.boards }));
     getAllPins().then(res => this.setState({ pins: res.data.images }));
+    isUserLoggedIn().then(res => {
+      console.log("isLoggedIn", res);
+      if (res.data.user) {
+        this.setState({ currentUser: res.data.user, showModal: "" });
+      }
+    });
   }
 
   loadOnePin = id => {
@@ -70,12 +82,63 @@ class App extends Component {
     });
   };
 
+  userLogin = (username, password) => {
+    console.log("username =>", username, password);
+    loginAuser(username, password)
+      .then(res => {
+        this.setState({
+          currentUser: res.data,
+          showModal: ""
+        });
+      })
+      .catch(err => {
+        console.log("@er", err);
+      });
+  };
+
+  handleSignup = (username, email, password) => {
+    signUpAuser(username, email, password)
+      .then(res => {
+        console.log("sign up successfull !!!!");
+        this.userLogin(username, password);
+      })
+      .catch(err => {
+        console.log("@er sign up error", err);
+      });
+  };
+
+  handleLogout = () => {
+    logoutUser().then(res => {
+      this.setState({
+        showModal: "login",
+        currentUser: null
+      });
+    });
+  };
+
+  toggleButton = () => {
+    if (this.state.showModal === "login") {
+      this.setState({ showModal: "sign up" });
+    }
+    if (this.state.showModal === "sign up") {
+      this.setState({ showModal: "login" });
+    }
+  };
+
   render() {
     console.log(this.state);
-    const { pins, pin, userBoards, user, userPins, boardPins } = this.state;
+    const {
+      pins,
+      pin,
+      userBoards,
+      user,
+      userPins,
+      boardPins,
+      showModal
+    } = this.state;
     return (
       <div className="App">
-        <NavBar />
+        {this.state.currentUser && <NavBar handleLogout={this.handleLogout} />}
         <Switch>
           <Route
             exact
@@ -129,6 +192,21 @@ class App extends Component {
                   {...props}
                   boardPins={boardPins}
                   loadPinsForAboardWithBoard={this.loadPinsForAboardWithBoard}
+                />
+              );
+            }}
+          />
+          <Route
+            path="/"
+            render={props => {
+              return (
+                <Pins
+                  {...props}
+                  pins={pins}
+                  showModal={showModal}
+                  userLogin={this.userLogin}
+                  toggleButton={this.toggleButton}
+                  handleSignup={this.handleSignup}
                 />
               );
             }}

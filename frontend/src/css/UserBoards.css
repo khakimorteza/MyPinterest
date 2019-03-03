@@ -9,8 +9,9 @@
   flex-direction: column;
   justify-content: center;
   width: 90%;
-  margin-left: 5%;
-  margin-right: 5%;
+  /* margin-left: 5%;
+  margin-right: 5%; */
+  margin: auto;
 }
 .board-pin {
   display: inline-block;
