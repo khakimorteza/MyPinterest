@@ -22,3 +22,4 @@ CREATE TABLE pins (
  board_id INT REFERENCES boards(id),
  url VARCHAR NOT NULL
 );
+/* remove user_id  from pins table*/

@@ -2,7 +2,7 @@ import React from "react";
 import { NavLink } from "react-router-dom";
 import "../css/NavBar.css";
 
-export const NavBar = ({ handleLogout }) => {
+export const NavBar = ({ handleLogout, currentUser }) => {
   return (
     <nav>
       <NavLink to={"/home"}>
@@ -13,14 +13,10 @@ export const NavBar = ({ handleLogout }) => {
       </NavLink>
       <input className="input" type="text" placeholder=" 🔍 Search ..." />
       <NavLink to={"/home"}>Home</NavLink>
-      <NavLink to={"/user/11/boards"}>Ms. Jocelyn Hammes</NavLink>
-      <NavLink
-        to={"/"}
-        onClick={e => {
-          e.preventDefault();
-          handleLogout();
-        }}
-      >
+      <NavLink to={`/user/${currentUser.id}/boards`}>
+        {currentUser.username}
+      </NavLink>
+      <NavLink to={"/"} onClick={handleLogout}>
         Logout
       </NavLink>
     </nav>

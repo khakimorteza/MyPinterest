@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Route, Switch } from "react-router-dom";
+import { Route, Switch, withRouter } from "react-router-dom";
 import { NavBar } from "./components/NavBar";
 import {
   getAllUsers,
@@ -13,9 +13,13 @@ import {
   loginAuser,
   signUpAuser,
   logoutUser,
-  isUserLoggedIn
+  isUserLoggedIn,
+  createNewPin,
+  createNewBoard
 } from "./util/util.js";
 import { Pins } from "./components/pins/Pins.js";
+import PinBuilder from "./components/pins/PinBuilder.js";
+import BoardBuilder from "./components/pins/BoardBuilder.js";
 import OnePin from "./components/onePin/OnePin.js";
 import UserBoards from "./components/user/UserBoards.js";
 import UserPins from "./components/user/UserPins.js";
@@ -27,14 +31,14 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      users: [],
+      users: null,
       user: null,
-      boards: [],
-      pins: [],
+      boards: null,
+      pins: null,
       pin: null,
-      userBoards: [],
-      userPins: [],
-      boardPins: [],
+      userBoards: null,
+      userPins: null,
+      boardPins: null,
       board: null,
       showModal: "login",
       currentUser: null
@@ -51,6 +55,16 @@ class App extends Component {
       }
     });
   }
+
+  authenticateAndSetUser = () => {
+    isUserLoggedIn().then(res => {
+      if (res.data.user) {
+        this.setState({ currentUser: res.data.user, showModal: "" });
+      } else {
+        this.props.history.push("/");
+      }
+    });
+  };
 
   loadOnePin = id => {
     console.log("id", id, this);
@@ -116,6 +130,14 @@ class App extends Component {
     });
   };
 
+  handleCreateApin = (user_id, board_id, url) => {
+    createNewPin(user_id, board_id, url);
+  };
+
+  handleCreateAboard = (title, user_id) => {
+    createNewBoard(title, user_id);
+  };
+
   toggleButton = () => {
     if (this.state.showModal === "login") {
       this.setState({ showModal: "sign up" });
@@ -134,16 +156,25 @@ class App extends Component {
       user,
       userPins,
       boardPins,
-      showModal
+      showModal,
+      currentUser
     } = this.state;
     return (
       <div className="App">
-        {this.state.currentUser && <NavBar handleLogout={this.handleLogout} />}
+        {this.state.currentUser && (
+          <NavBar handleLogout={this.handleLogout} currentUser={currentUser} />
+        )}
         <Switch>
           <Route
             exact
             path="/home"
-            render={props => <Pins {...props} pins={pins} />}
+            render={props => (
+              <Pins
+                authenticate={this.authenticateAndSetUser}
+                {...props}
+                pins={pins}
+              />
+            )}
           />
 
           <Route
@@ -197,6 +228,34 @@ class App extends Component {
             }}
           />
           <Route
+            path="/pin-builder"
+            render={props => {
+              return (
+                <PinBuilder
+                  handleCreateApin={this.handleCreateApin}
+                  currentUser={currentUser}
+                  userBoards={userBoards}
+                  authenticate={this.authenticateAndSetUser}
+                  boardsAndPinsForAuser={this.boardsAndPinsForAuser}
+                  {...props}
+                />
+              );
+            }}
+          />
+          <Route
+            path="/board-builder"
+            render={props => {
+              return (
+                <BoardBuilder
+                  handleCreateAboard={this.handleCreateAboard}
+                  authenticate={this.authenticateAndSetUser}
+                  currentUser={currentUser}
+                  {...props}
+                />
+              );
+            }}
+          />
+          <Route
             path="/"
             render={props => {
               return (
@@ -217,4 +276,4 @@ class App extends Component {
   }
 }
 
-export default App;
+export default withRouter(App);

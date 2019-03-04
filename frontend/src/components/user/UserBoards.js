@@ -17,7 +17,7 @@ const UserBoards = ({
   //   return <div>Loading!</div>;
   // }
   console.log("user", user, "userBoards", userBoards);
-  if (!user || user.id !== Number(match.params.id) || !userBoards.length) {
+  if (!user || user.id !== Number(match.params.id) || !userBoards) {
     getSingleUser(match.params.id);
     boardsAndPinsForAuser(match.params.id);
     return <div>Loading!</div>;

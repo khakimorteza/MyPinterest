@@ -11,5 +11,9 @@ export const loginAuser = (username, password) =>
   axios.post("/users/login", { username, password });
 export const signUpAuser = (username, email, password) =>
   axios.post("/users/", { username, email, password });
-export const logoutUser = () => axios.post("users/logout");
+export const logoutUser = () => axios.post("/users/logout");
 export const isUserLoggedIn = () => axios.get("/users/isLoggedIn");
+export const createNewPin = (user_id, board_id, url) =>
+  axios.post("/pins", { user_id, board_id, url });
+export const createNewBoard = (title, user_id) =>
+  axios.post("/boards", { title, user_id });
