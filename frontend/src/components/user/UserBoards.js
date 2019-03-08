@@ -20,6 +20,7 @@ const UserBoards = ({
   if (!user || user.id !== Number(match.params.id) || !userBoards) {
     getSingleUser(match.params.id);
     boardsAndPinsForAuser(match.params.id);
+    console.log("user2", user, "userBoards2", userBoards);
     return <div>Loading!</div>;
   }
 

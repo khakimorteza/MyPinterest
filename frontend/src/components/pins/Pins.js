@@ -26,7 +26,8 @@ export const Pins = ({
       )}
       {showModal === "login" && <Login userLogin={userLogin} />}
       {showModal === "sign up" && <SignUp handleSignup={handleSignup} />}
-      <div className="images-container">{pins}</div>
+
+      <div className={showModal ? "landing" : "images-container"}>{pins}</div>
     </>
   );
 };

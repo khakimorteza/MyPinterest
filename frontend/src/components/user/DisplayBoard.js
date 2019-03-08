@@ -9,7 +9,6 @@ export const DisplayBoard = ({ board }) => {
       </div>
     );
   });
-  console.log("bp", board);
   return (
     <>
       <Link to={`/board/${board.board_id}`}>

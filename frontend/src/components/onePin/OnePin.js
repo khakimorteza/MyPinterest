@@ -14,9 +14,9 @@ const OnePin = ({ pin, match, loadOnePin }) => {
 
   return validPin(pin, pinId) ? (
     <div className="image-page">
-      <div className="link-home">
-        <Link to={"/home"}>home</Link>
-      </div>
+      <Link className="link-home" to={"/home"}>
+        Home
+      </Link>
       <div className="image-container">
         <form className="image-form">
           <select>

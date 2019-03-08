@@ -143,4 +143,30 @@ select,
 input,
 button {
   outline: none;
+  font-size: 16px;
+}
+
+select {
+  font-size: 16px;
+}
+
+input {
+  font-size: 16px;
+  padding: 3px;
+}
+
+button {
+  background-color: rgb(230, 0, 35);
+  color: rgb(255, 255, 255);
+  font-size: 15px;
+  border-radius: 4px;
+}
+
+form button {
+  margin: 10px;
+}
+
+a,
+a:visited {
+  color: #333;
 }

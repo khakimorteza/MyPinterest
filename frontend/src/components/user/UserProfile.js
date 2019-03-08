@@ -18,6 +18,7 @@ export const UserProfile = ({ user }) => (
     <div className="link">
       <NavLink to={`/user/${user.id}/boards`}>Boards</NavLink>
       <NavLink to={`/user/${user.id}/pins`}>Pins</NavLink>
+      <NavLink to={"/pin-builder"}>Create Pin</NavLink>
     </div>
   </>
 );

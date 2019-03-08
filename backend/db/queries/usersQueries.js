@@ -92,7 +92,7 @@ const getPinsForAuser = (req, res, next) => {
 const getBoardsAndPinsForAuser = (req, res, next) => {
   let user_id = parseInt(req.params.id);
   db.any(
-    "SELECT users.username, boards.title, pins.url, pins.id AS pin_id, pins.board_id FROM users JOIN boards ON boards.user_id = users.id LEFT JOIN pins ON boards.id = pins.board_id  WHERE users.id =$1",
+    "SELECT users.username, boards.title, pins.url, pins.id AS pin_id, boards.id AS board_id FROM users JOIN boards ON boards.user_id = users.id LEFT JOIN pins ON boards.id = pins.board_id  WHERE users.id =$1",
     [user_id]
   )
     .then(data => {

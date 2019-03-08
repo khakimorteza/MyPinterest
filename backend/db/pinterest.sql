@@ -19,7 +19,7 @@ CREATE TABLE boards (
 CREATE TABLE pins (
  id SERIAL PRIMARY KEY,
  user_id INT REFERENCES users(id) ON DELETE CASCADE,
- board_id INT REFERENCES boards(id),
+ board_id INT REFERENCES boards(id) ON DELETE CASCADE,
  url VARCHAR NOT NULL
 );
 /* remove user_id  from pins table*/

@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { Route, Switch, withRouter } from "react-router-dom";
 import { NavBar } from "./components/NavBar";
 import {
-  getAllUsers,
   getSingleUser,
   getAllBoards,
   getAllPins,
@@ -13,10 +12,9 @@ import {
   loginAuser,
   signUpAuser,
   logoutUser,
-  isUserLoggedIn,
-  createNewPin,
-  createNewBoard
+  isUserLoggedIn
 } from "./util/util.js";
+import { Home } from "./components/home/Home.js";
 import { Pins } from "./components/pins/Pins.js";
 import PinBuilder from "./components/pins/PinBuilder.js";
 import BoardBuilder from "./components/pins/BoardBuilder.js";
@@ -41,7 +39,9 @@ class App extends Component {
       boardPins: null,
       board: null,
       showModal: "login",
-      currentUser: null
+      currentUser: null,
+      searchResult: null,
+      textInput: ""
     };
   }
   componentDidMount() {
@@ -67,13 +67,11 @@ class App extends Component {
   };
 
   loadOnePin = id => {
-    console.log("id", id, this);
     getSinglePin(id).then(res => this.setState({ pin: res.data.image }));
   };
 
   getSingleUser = id => {
     getSingleUser(id).then(res => {
-      console.log("!!!!!", res.data);
       this.setState({ user: res.data.user });
     });
   };
@@ -96,6 +94,8 @@ class App extends Component {
     });
   };
 
+  onSubmitt;
+
   userLogin = (username, password) => {
     console.log("username =>", username, password);
     loginAuser(username, password)
@@ -104,6 +104,7 @@ class App extends Component {
           currentUser: res.data,
           showModal: ""
         });
+        this.props.history.push("/home");
       })
       .catch(err => {
         console.log("@er", err);
@@ -130,12 +131,28 @@ class App extends Component {
     });
   };
 
-  handleCreateApin = (user_id, board_id, url) => {
-    createNewPin(user_id, board_id, url);
+  handleSearchChange = event => {
+    let searchResult = this.state.boards.filter(board => {
+      return board.title
+        .toLowerCase()
+        .includes(event.target.value.toLowerCase());
+    });
+    this.setState({
+      textInput: event.target.value,
+      searchResult: searchResult
+    });
   };
 
-  handleCreateAboard = (title, user_id) => {
-    createNewBoard(title, user_id);
+  handleSearchSubmit = e => {
+    e.preventDefault();
+    const searchResult = this.state.searchResult;
+    if (searchResult) {
+      this.props.history.push(`/board/${searchResult[0].id}`);
+      this.setState({
+        searchResult: null,
+        textInput: ""
+      });
+    }
   };
 
   toggleButton = () => {
@@ -157,19 +174,26 @@ class App extends Component {
       userPins,
       boardPins,
       showModal,
-      currentUser
+      currentUser,
+      textInput
     } = this.state;
     return (
       <div className="App">
         {this.state.currentUser && (
-          <NavBar handleLogout={this.handleLogout} currentUser={currentUser} />
+          <NavBar
+            handleLogout={this.handleLogout}
+            currentUser={currentUser}
+            handleSearchChange={this.handleSearchChange}
+            handleSearchSubmit={this.handleSearchSubmit}
+            textInput={textInput}
+          />
         )}
         <Switch>
           <Route
             exact
             path="/home"
             render={props => (
-              <Pins
+              <Home
                 authenticate={this.authenticateAndSetUser}
                 {...props}
                 pins={pins}
@@ -232,7 +256,6 @@ class App extends Component {
             render={props => {
               return (
                 <PinBuilder
-                  handleCreateApin={this.handleCreateApin}
                   currentUser={currentUser}
                   userBoards={userBoards}
                   authenticate={this.authenticateAndSetUser}
@@ -247,7 +270,6 @@ class App extends Component {
             render={props => {
               return (
                 <BoardBuilder
-                  handleCreateAboard={this.handleCreateAboard}
                   authenticate={this.authenticateAndSetUser}
                   currentUser={currentUser}
                   {...props}

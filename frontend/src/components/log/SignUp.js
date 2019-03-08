@@ -8,7 +8,8 @@ class SignUp extends React.Component {
     this.state = {
       username: "",
       email: "",
-      password: ""
+      password: "",
+      errors: []
     };
   }
 
@@ -18,8 +19,41 @@ class SignUp extends React.Component {
     });
   };
 
+  validate = () => {
+    const { email, username, password } = this.state;
+    const errors = [];
+    if (email.length === 0 || !this.validateEmail(email)) {
+      errors.push("Invalid email");
+    }
+    if (username.length === 0) {
+      errors.push("Invalid username");
+    }
+    if (password.length === 0) {
+      errors.push("Invalid password");
+    }
+    this.setState({ errors: errors });
+  };
+
+  validateEmail = email => {
+    const re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return re.test(email);
+  };
+
+  handleSubmit = e => {
+    e.preventDefault();
+    this.validate();
+    if (!this.state.errors.length) {
+      this.props.handleSignup(
+        this.state.username,
+        this.state.email,
+        this.state.password
+      );
+    }
+  };
+
   render() {
     const { handleSignup } = this.props;
+    const errorMessages = this.state.errors.map(e => <li>{e}</li>);
     return (
       <Modal>
         <div className="login">
@@ -28,6 +62,7 @@ class SignUp extends React.Component {
             alt=""
           />
           <h1>Sign up to see more</h1>
+          <ul className="errors">{errorMessages}</ul>
           <form>
             <input
               required
@@ -61,14 +96,7 @@ class SignUp extends React.Component {
             <button
               value="continue"
               placeholder="continue"
-              onClick={e => {
-                e.preventDefault();
-                handleSignup(
-                  this.state.username,
-                  this.state.email,
-                  this.state.password
-                );
-              }}
+              onClick={this.handleSubmit}
             >
               Continue
             </button>

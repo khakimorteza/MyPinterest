@@ -9,15 +9,14 @@
   flex-direction: column;
   justify-content: center;
   width: 90%;
-  /* margin-left: 5%;
-  margin-right: 5%; */
   margin: auto;
 }
 .board-pin {
-  display: inline-block;
+  /* box-sizing: border-box; */
+  /* display: table-footer-group; */
 }
 .board-pin img {
-  width: 100px;
+  width: 101px;
   border-radius: 5px;
   margin: 1px;
   margin-bottom: 0px;
@@ -28,13 +27,21 @@
   flex-wrap: wrap;
   width: 80%;
   flex-direction: row;
+  /* box-sizing: border-box; */
 }
 
 .main-board {
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  width: 315px;
   margin-right: 1%;
+  margin-left: 1%;
   border-radius: 10px;
+  text-decoration: none;
+  padding-right: 7px;
+  padding-left: 3px;
+  overflow: hidden;
 }
 
 .main-board:hover {
@@ -42,15 +49,15 @@
 }
 
 .board {
-  display: flex;
-  flex-wrap: wrap;
-  width: 310px;
-  height: 270px;
+  width: 309px;
+  height: 230px;
   background-color: #f0f0f0;
   overflow: hidden;
   border-radius: 10px;
-  padding: 10px;
   margin: 5px;
+  column-width: 102px;
+  column-count: 3;
+  column-gap: 1px;
 }
 .board-title {
   display: flex;

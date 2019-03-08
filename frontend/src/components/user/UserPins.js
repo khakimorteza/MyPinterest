@@ -12,7 +12,12 @@ const UserPins = ({
   match
 }) => {
   // TOOD: fix when user has no pins.
-  if (!user || user.id !== Number(match.params.id) || !userPins) {
+  if (
+    !user ||
+    user.id !== Number(match.params.id) ||
+    !userPins ||
+    user.id !== userPins[0].user_id
+  ) {
     getSingleUser(match.params.id);
     loadPinsForAuser(match.params.id);
     return <div>Loading!</div>;
@@ -21,7 +26,6 @@ const UserPins = ({
   return (
     <div className="user-pins-page">
       <UserProfile user={user} />
-      <NavLink to={"/pin-builder"}>pin-builder</NavLink>
       <Pins pins={userPins} />
     </div>
   );

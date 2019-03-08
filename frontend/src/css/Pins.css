@@ -1,32 +1,35 @@
 .display-pins {
   position: relative;
+  /* margin: 5px; */
+  /* width: 100%; */
+  box-sizing: border-box;
 }
 
 .display-pins select {
   display: none;
   position: absolute;
-  margin: 10px;
   width: calc(95% - 10px);
   z-index: 2;
+  font-size: 16px;
+  margin: 10px;
 }
 
 .display-pins:hover select {
   display: block;
 }
 .images-container {
-  width: 90%;
-  margin: auto;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-around;
+  /* width: 90%;
+  margin: auto; */
+  /* display: flex;
+  flex-wrap: wrap; */
   margin-top: 20px;
+  column-width: 250px;
+  column-gap: 10px;
 }
 
 .image {
-  display: flex;
-  justify-content: space-around;
-  width: 235px;
+  width: 245px;
   height: auto;
-  margin-bottom: 15px;
+  margin-bottom: 10px;
   border-radius: 10px;
 }

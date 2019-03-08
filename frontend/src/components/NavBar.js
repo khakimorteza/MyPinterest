@@ -2,7 +2,13 @@ import React from "react";
 import { NavLink } from "react-router-dom";
 import "../css/NavBar.css";
 
-export const NavBar = ({ handleLogout, currentUser }) => {
+export const NavBar = ({
+  handleLogout,
+  currentUser,
+  handleSearchChange,
+  handleSearchSubmit,
+  textInput
+}) => {
   return (
     <nav>
       <NavLink to={"/home"}>
@@ -11,7 +17,16 @@ export const NavBar = ({ handleLogout, currentUser }) => {
           alt=""
         />
       </NavLink>
-      <input className="input" type="text" placeholder=" 🔍 Search ..." />
+      <form onSubmit={handleSearchSubmit}>
+        <input
+          className="input"
+          name="textInput"
+          value={textInput}
+          type="text"
+          placeholder=" 🔍 Search for a Board"
+          onChange={handleSearchChange}
+        />
+      </form>
       <NavLink to={"/home"}>Home</NavLink>
       <NavLink to={`/user/${currentUser.id}/boards`}>
         {currentUser.username}

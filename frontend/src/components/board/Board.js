@@ -1,6 +1,7 @@
 import React from "react";
 import { withRouter } from "react-router-dom";
 import { Pins } from "../pins/Pins.js";
+import "../../css/Board.css";
 
 const BoardPins = ({ boardPins, loadPinsForAboardWithBoard, match }) => {
   console.log("boardpins", boardPins);
@@ -10,10 +11,15 @@ const BoardPins = ({ boardPins, loadPinsForAboardWithBoard, match }) => {
   }
 
   return (
-    <div>
-      <h1>{boardPins.title}</h1>
-      <Pins pins={boardPins.pins} />
-    </div>
+    <>
+      <div className="board-name">
+        <h1>{boardPins.title}</h1>
+      </div>
+      <h2 className="link">Pins</h2>
+      <div className="pins-board-page">
+        <Pins pins={boardPins.pins} />
+      </div>
+    </>
   );
 };
 
