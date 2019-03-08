@@ -22,7 +22,6 @@ import OnePin from "./components/onePin/OnePin.js";
 import UserBoards from "./components/user/UserBoards.js";
 import UserPins from "./components/user/UserPins.js";
 import BoardPins from "./components/board/Board.js";
-import Login from "./components/log/Login.js";
 import "./css/App.css";
 
 class App extends Component {

@@ -106,6 +106,10 @@ const getBoardsAndPinsForAuser = (req, res, next) => {
         .map(e => _.pick(e, ["board_id", "title"]))
         .value();
 
+      // const uniques = _.uniqBy(data, "borad_id");
+      // const boards = _.map(uniques, e => _.pick(e, ["board_id", "title"]))
+      // const boards = uniques.map(e => _.pick(e, ["board_id", "title"]));
+
       // const unique = _.uniqBy(data, 'board_id')
       // const boards = _.map(unique, e => _.pick(e, ["board_id", "title"]))
       // const boards = unique.map(e, e => _.pick(e, ["board_id", "title"]))

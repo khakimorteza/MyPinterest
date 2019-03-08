@@ -1,5 +1,6 @@
 import React from "react";
 import { createNewBoard } from "../../util/util.js";
+import { Link } from "react-router-dom";
 import "../../css/AddForm.css";
 
 class BoardBuilder extends React.Component {
@@ -24,12 +25,21 @@ class BoardBuilder extends React.Component {
     this.setState({ title: "" });
   };
 
+  goBack = () => {
+    this.props.history.goBack();
+  };
+
   render() {
     const { currentUser } = this.props;
 
     return (
       <div className="form-page">
         <div className="form-container">
+          <img
+            src="https://www.freepnglogos.com/uploads/pinterest-button-logo-vector-png-26.png"
+            alt=""
+          />
+          <h1>Create Board</h1>
           <form>
             <input
               required
@@ -52,6 +62,9 @@ class BoardBuilder extends React.Component {
             </button>
           </form>
         </div>
+        <Link className="link-home" to="#" onClick={this.goBack}>
+          Back
+        </Link>
       </div>
     );
   }

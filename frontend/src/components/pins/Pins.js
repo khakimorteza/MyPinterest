@@ -15,7 +15,7 @@ export const Pins = ({
   pins =
     pins &&
     pins.map(pin => {
-      return <DisplayPins pin={pin} />;
+      return <DisplayPins key={pin.id || pin.pin_id} pin={pin} />;
     });
   return (
     <>

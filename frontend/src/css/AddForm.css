@@ -4,18 +4,42 @@
   height: 100%;
 }
 .form-container {
-  width: 450px;
+  width: 400px;
+  padding-bottom: 100px;
   margin: 0 auto;
   background-color: #fff;
   padding: 20px;
   border-radius: 5px;
-  transform: translateY(30px);
+  transform: translateY(100px);
 }
 
 .form-container input {
+  width: 60%;
   margin: 10px 0;
 }
 
+.form-container select {
+  width: 62%;
+  margin-top: 20px;
+  margin-bottom: 7px;
+}
+
+.form-container img {
+  width: 30px;
+  height: 30px;
+  margin-top: 20px;
+  margin-bottom: 15px;
+}
+
 .form-container button {
+  width: 62%;
   padding: 3px 20px;
+  background-color: rgb(230, 0, 35);
+  margin-bottom: 50px;
+}
+
+.form-container a {
+  display: inline-block;
+  padding-bottom: 50px;
+  padding-top: 15px;
 }
