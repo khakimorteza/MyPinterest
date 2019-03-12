@@ -58,6 +58,16 @@ class Login extends React.Component {
             >
               Continue
             </button>
+            <button
+              value="continue"
+              placeholder="Demo"
+              onClick={e => {
+                e.preventDefault();
+                userLogin("Morteza", "1357");
+              }}
+            >
+              Take a Tour
+            </button>
           </form>
         </div>
       </Modal>

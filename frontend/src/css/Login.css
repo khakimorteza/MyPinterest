@@ -4,8 +4,8 @@
   column-width: 250px;
   column-gap: 10px;
   padding-top: 30px;
-  overflow: hidden;
-  height: 100%;
+  /* overflow: hidden;
+  height: 100%; */
 }
 
 .login {
