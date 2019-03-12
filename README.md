@@ -18,8 +18,8 @@ Pinterest, Inc. is a social media web and mobile application company that operat
 
 # Design Docs
 
-- [component hierarchy](https://github.com/khakimorteza/MyPinterest/docs/components)
-- [routes](https://github.com/khakimorteza/MyPinterest/docs/routes)
-- [schema](https://github.com/khakimorteza/MyPinterest/docs/schema)
-- [sample state](https://github.com/khakimorteza/MyPinterest/docs/sample_state.md)
-- [wireframs](https://github.com/khakimorteza/MyPinterest/docs/Wireframes)
+- [component hierarchy](https://github.com/khakimorteza/MyPinterest/blob/master/docs/components.md)
+- [routes](https://github.com/khakimorteza/MyPinterest/blob/master/docs/routes.md)
+- [schema](https://github.com/khakimorteza/MyPinterest/blob/master/docs/schema.md)
+- [sample state](https://github.com/khakimorteza/MyPinterest/blob/master/docs/sample_state.md)
+- [wireframs](https://github.com/khakimorteza/MyPinterest/tree/master/docs/Wireframes)
