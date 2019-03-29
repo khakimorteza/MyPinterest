@@ -1,8 +1,8 @@
-# MyPintrest
+# MyPinterest
 
 # Minimum Viable Product
 
-MyPintrest is a clone of Pinterest using JavaScript and React.
+MyPinterest is a clone of Pinterest using JavaScript and React.
 Pinterest, Inc. is a social media web and mobile application company that operates a software system designed to discover information on the World Wide Web, mainly using images. By the end of the production period, this app will, at a minimum, satisfy the following criteria:
 
 - New user account creation and Login
