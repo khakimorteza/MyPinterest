@@ -22,5 +22,5 @@ Pinterest, Inc. is a social media web and mobile application company that operat
 - [routes](https://github.com/khakimorteza/MyPinterest/blob/master/docs/routes.md)
 - [schema](https://github.com/khakimorteza/MyPinterest/blob/master/docs/schema.md)
 - [sample state](https://github.com/khakimorteza/MyPinterest/blob/master/docs/sample_state.md)
-- [wireframs](https://github.com/khakimorteza/MyPinterest/tree/master/docs/Wireframes)
+- [wireframs](https://github.com/khakimorteza/MyPinterest/wiki/wireframes)
 - [wiki](https://github.com/khakimorteza/MyPinterest/wiki)
